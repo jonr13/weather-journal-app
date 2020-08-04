@@ -1,4 +1,7 @@
-projectData = {};
+let projectData = {};
+let curTemp
+let curDate
+let useResp
 
 // Require Express to run server and routes
 const express = require('express');
@@ -29,18 +32,22 @@ const server = app.listen(port, listening);
 
 // Adding a GET ROUTE to add data to projectData array
 function sendData (request, response) {
-    response.send(projectData);}
+    response.send(projectData);
+    return projectData;
+}
 
 app.get('/all', sendData);
 
 
-function addWeather (request, response) {
-    const request = travel;
-    const curTemp = travel.body.main;
-    const curDate = travel.body.main;
-    const useResp = travel.body.main;
+function addWeather (req, res) {
+    const curTemp = req.body.main;
+    const curDate = req.body.main;
+    const useResp = req.body.main;
+    return curTemp, curDate, useResp;
 }
 
 app.post('/weatherdata', addWeather);
 
-projectData.push({temperature: curTemp, date: curDate, response: useResp});
+projectData['temperature'] = `${curTemp}`;
+projectData['date'] = `${curDate}`;
+projectData['userResponse'] = `${useResp}`;
