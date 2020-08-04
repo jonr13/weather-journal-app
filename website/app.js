@@ -6,8 +6,14 @@ let countryCode = 'us'
 let userRespon
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = `${d.getMonth()}+'.'+ d.getDate()+'.'+ d.getFullYear()`;
 
+const monthDict = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
+let gtMn = d.getMonth();
+let newMonth = monthDict[gtMn]
+let newYear = d.getFullYear();
+let newDay = d.getDate();
+let finalDate = `Your Weather for ${newMonth} ${newDay}, ${newYear}`
 
 document.getElementById('generate').addEventListener('click', clickFunc)
 
@@ -19,13 +25,12 @@ const weatherData = async (baseURL, zipCode, apiKey) => {
         catch(error) {console.log("There was an error", error);}
     }
 
-
-      // Post request
-const postData = async ( url='', data = {} ) => {
+// Post request Function
+const postData = async (url, data) => {
     console.log(data);
     const response = await fetch(url, {
         method: 'POST',
-        credentials: 'same-=origin',
+        credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -41,13 +46,30 @@ const postData = async ( url='', data = {} ) => {
     }
     };
 
+//Update UI with Weather Data
+const updateUI = async () => {
+    const request = await fetch('/all');
+    try{
+        const allData = await request.json();
+        console.log(allData);
+        //document.getElementById('temp').innerHTML = allData[0].main.temp;
+   }catch(error) {
+       console.log('error updating UI')
+   }
+}
 
-  function clickFunc(e) {
+
+
+
+function clickFunc(e) {
     const zipCode = document.getElementById('zip').value;
-    const userRespon = document.getElementById('#feelings').value;
-    console.log(zipCode)
-    console.log(userRespon)
+    const userRespon = document.getElementById('feelings').value;
     weatherData(baseURL, zipCode, apiKey)
         .then((data) => {
             postData('/weatherdata', data);
-        })}
+        })
+        .then(() => {
+            updateUI();
+        });
+        return zipCode, userRespon;
+    }

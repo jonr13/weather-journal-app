@@ -1,6 +1,6 @@
 let projectData = {};
 let curTemp
-let curDate
+let feelsLike
 let useResp
 
 // Require Express to run server and routes
@@ -36,18 +36,20 @@ function sendData (request, response) {
     return projectData;
 }
 
-app.get('/all', sendData);
 
-
-function addWeather (req, res) {
-    const curTemp = req.body.main;
-    const curDate = req.body.main;
+function addWeather (request, response) {
+    const curTemp = req.body.main.temp;
+    const curDate = req.body.main.feels_like;
     const useResp = req.body.main;
     return curTemp, curDate, useResp;
 }
 
+
 app.post('/weatherdata', addWeather);
 
+app.get('/all', sendData);
+
+
 projectData['temperature'] = `${curTemp}`;
-projectData['date'] = `${curDate}`;
+projectData['feelsLike'] = `${feelsLike}`;
 projectData['userResponse'] = `${useResp}`;
