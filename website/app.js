@@ -6,7 +6,6 @@ let countryCode = 'us'
 let userRespon
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = `${d.getMonth()}+'.'+ d.getDate()+'.'+ d.getFullYear()`;
 
 const monthDict = {'1': 'January', '2': 'February', '3': 'March', '4': 'April', '5': 'May', '6': 'June', '7': 'July', '8': 'August', '9': 'September', '10': 'October', '11': 'November', '12': 'December'}
 let gtMn = d.getMonth();
@@ -21,30 +20,27 @@ document.getElementById('generate').addEventListener('click', clickFunc)
 const weatherData = async (baseURL, zipCode, apiKey) => {
     const finalURL = `${baseURL}zip=${zipCode},${countryCode}&units=metric&appid=${apiKey}`;
     const response = await fetch (finalURL)
-        try {const data = await response.json(); console.log(data); return data;}
+        try {const data = await response.json(); return data;}
         catch(error) {console.log("There was an error", error);}
     }
 
 // Post request Function
-const postData = async (url, data) => {
-    console.log(data);
+const postData = async (url = '', data = {}) => {
     const response = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-
+    },
+    body: JSON.stringify(data),});
     try {
-        const newData = await response.json();
-        console.log(newData);
-        return newData;
+        //const newData = await response.json();
+    console.log(response);
+        //return newData;
     }catch(error) {
         console.log('error', error);
     }
-    };
+    }
 
 //Update UI with Weather Data
 const updateUI = async () => {
@@ -58,18 +54,17 @@ const updateUI = async () => {
    }
 }
 
-
-
-
 function clickFunc(e) {
     const zipCode = document.getElementById('zip').value;
     const userRespon = document.getElementById('feelings').value;
     weatherData(baseURL, zipCode, apiKey)
-        .then((data) => {
-            postData('/weatherdata', data);
-        })
-        .then(() => {
-            updateUI();
-        });
-        return zipCode, userRespon;
+    .then(function(data){console.log(data);
+        postData('/weatherdata', {temperature: data.main.temp, feelings: userRespon, date: finalDate});})
     }
+    
+    //.then(data => {
+      //      postData('/weatherdata', data);
+        //}).then(() => {
+          //  updateUI();
+       // });
+   // }

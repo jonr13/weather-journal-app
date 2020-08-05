@@ -38,18 +38,17 @@ function sendData (request, response) {
 
 
 function addWeather (request, response) {
-    const curTemp = req.body.main.temp;
-    const curDate = req.body.main.feels_like;
-    const useResp = req.body.main;
-    return curTemp, curDate, useResp;
+    console.log(request.body);
+    newEntry = {temperature: request.body.temperature,
+    feelings: request.body.feelings,
+    date: request.body.date,
+}
+projectData.push(newEntry)
+response.send(projectData)
+console.log(projectData)
 }
 
 
 app.post('/weatherdata', addWeather);
 
 app.get('/all', sendData);
-
-
-projectData['temperature'] = `${curTemp}`;
-projectData['feelsLike'] = `${feelsLike}`;
-projectData['userResponse'] = `${useResp}`;
