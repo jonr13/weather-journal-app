@@ -31,24 +31,25 @@ function listening(){
 const server = app.listen(port, listening);
 
 // Adding a GET ROUTE to add data to projectData array
+
+app.get('/all', sendData);
+
 function sendData (request, response) {
     response.send(projectData);
-    return projectData;
+    console.log(projectData);
 }
-
 
 function addWeather (request, response) {
     console.log(request.body);
     newEntry = {temperature: request.body.temperature,
     feelings: request.body.feelings,
-    date: request.body.date,
-}
-projectData.push(newEntry)
-response.send(projectData)
-console.log(projectData)
+    date: request.body.date,};
+    let projectData = newEntry;
+    response.send(projectData);
+    console.log(projectData);
+    return projectData;
 }
 
 
 app.post('/weatherdata', addWeather);
 
-app.get('/all', sendData);

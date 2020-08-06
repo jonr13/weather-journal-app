@@ -34,9 +34,9 @@ const postData = async (url = '', data = {}) => {
     },
     body: JSON.stringify(data),});
     try {
-        //const newData = await response.json();
-    console.log(response);
-        //return newData;
+        const newData = await response.json();
+        console.log(newData);
+        return newData;
     }catch(error) {
         console.log('error', error);
     }
@@ -59,12 +59,8 @@ function clickFunc(e) {
     const userRespon = document.getElementById('feelings').value;
     weatherData(baseURL, zipCode, apiKey)
     .then(function(data){console.log(data);
-        postData('/weatherdata', {temperature: data.main.temp, feelings: userRespon, date: finalDate});})
+        postData('/weatherdata', {temperature: data.main.temp, feelings: userRespon, date: finalDate});
+    }).then(() => {
+        updateUI();
+       });
     }
-    
-    //.then(data => {
-      //      postData('/weatherdata', data);
-        //}).then(() => {
-          //  updateUI();
-       // });
-   // }
