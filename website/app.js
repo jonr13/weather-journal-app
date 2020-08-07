@@ -47,8 +47,10 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try{
         const allData = await request.json();
-        console.log(allData);
-        //document.getElementById('temp').innerHTML = allData[0].main.temp;
+        console.log(allData.date);
+        document.getElementById('temp').innerHTML = `Current Temperature: ${allData.temperature}`;
+        document.getElementById('date').innerHTML = `Update: ${allData.date}`;
+        document.getElementById('content').innerHTML = `How You're Feeling: ${allData.feelings}`;
    }catch(error) {
        console.log('error updating UI')
    }

@@ -41,10 +41,9 @@ function sendData (request, response) {
 
 function addWeather (request, response) {
     console.log(request.body);
-    newEntry = {temperature: request.body.temperature,
-    feelings: request.body.feelings,
-    date: request.body.date,};
-    let projectData = newEntry;
+    projectData["temperature"] = request.body.temperature;
+    projectData["feelings"] = request.body.feelings;
+    projectData["date"] = request.body.date;
     response.send(projectData);
     console.log(projectData);
     return projectData;
