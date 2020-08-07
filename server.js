@@ -39,6 +39,7 @@ function sendData (request, response) {
     console.log(projectData);
 }
 
+//Adding Project Data (User Data) to to leveraged when dynamically updating UI
 function addWeather (request, response) {
     console.log(request.body);
     projectData["temperature"] = request.body.temperature;

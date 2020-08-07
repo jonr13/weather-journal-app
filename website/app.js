@@ -56,6 +56,7 @@ const updateUI = async () => {
    }
 }
 
+//Eventl Listener to Gather Zip Code, User Feelings, and dynamically post to UI
 function clickFunc(e) {
     const zipCode = document.getElementById('zip').value;
     const userRespon = document.getElementById('feelings').value;
